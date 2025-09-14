@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Stock Prediction</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #0a0f1f, #06141d, #1a0033);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      background: rgba(0,0,0,0.85);
+      padding: 60px 50px;
+      border-radius: 25px;
+      text-align: center;
+      width: 500px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.7);
+      z-index: 1;
+    }
+
+    /* AI LOGO + 动态能量环 */
+    .logo-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+      width: 200px;
+      height: 200px;
+    }
+
+    .logo {
+      font-size: 72px;
+      font-weight: bold;
+      color: #00eaff;
+      text-shadow: 0 0 30px #00eaff, 0 0 60px #00eaff;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    /* 外圈发光环 */
+    .ring {
+      width: 180px;
+      height: 180px;
+      border: 3px solid rgba(0, 234, 255, 0.7);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 25px #00eaff, 0 0 50px #00eaff;
+      animation: spin 6s linear infinite, glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 15px #00eaff, 0 0 30px #00eaff; }
+      to { box-shadow: 0 0 35px #00eaff, 0 0 80px #00eaff; }
+    }
+
+    /* 标题 */
+    h1 {
+      font-size: 34px;
+      font-weight: bold;
+      color: #ffd700;
+      text-shadow: 0 0 25px #ffd700, 0 0 50px #ffdd33;
+      margin: 15px 0;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 25px;
+      color: #ccc;
+    }
+
+    .box {
+      background: #11193a;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .highlight {
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    input {
+      width: 90%;
+      padding: 14px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 10px;
+      text-align: center;
+      outline: none;
+      font-size: 16px;
+    }
+
+    button {
+      width: 90%;
+      padding: 14px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 30px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px #0072ff;
+    }
+
+    /* 弹窗 */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #111;
+      padding: 35px;
+      border-radius: 20px;
+      width: 450px;
+      text-align: left;
+      box-shadow: 0 0 40px rgba(0,0,0,0.7);
+    }
+
+    .modal h3 {
+      color: #ffd700;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .modal p {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .modal ul {
+      margin: 15px 0;
+      padding-left: 20px;
+      font-size: 15px;
+    }
+
+    .whatsapp-btn {
+      display: block;
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      background: #25d366;
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo-wrapper">
+      <div class="ring"></div>
+      <div class="logo">AI</div>
+    </div>
+    <h1>2025 Most Powerful AI</h1>
+    <h2>Stock Price Prediction</h2>
+
+    <div class="box">
+      Prediction Accuracy Reaches <span class="highlight">99.8%</span><br>
+      Enter your stock code or interested stock code below, and the AI system will complete the analysis within 1.5 seconds.<br>
+      Currently, <span class="highlight">46,863</span> people are viewing the complete report for free!
+    </div>
+
+    <input type="text" placeholder="Enter company name or ticker symbol">
+    <button id="startBtn">Start Analysis</button>
+  </div>
+
+  <!-- 弹窗 -->
+  <div class="modal" id="reportModal">
+    <div class="modal-content">
+      <h3>📊 Stock Report is Ready</h3>
+      <p>🔍 Your analysis report has been generated. Contact us via <b>WhatsApp</b> to receive the report, and we’ll also share three stocks with strong potential to rise this Wednesday.</p>
+      <p>✅ The report includes:</p>
+      <ul>
+        <li>Short-term price trend forecasts</li>
+        <li>Buy and sell timing suggestions</li>
+        <li>Analyst confidence ratings</li>
+      </ul>
+      <p>⚡ <span style="color: red;">Updated today – Free access ends soon</span></p>
+      <a class="whatsapp-btn" href="https://wa.me/1234567890?text=Hello,%20I%20would%20like%20to%20get%20premium%20stock%20codes" target="_blank">
+        ✅ Get the Report for Free via WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("startBtn").addEventListener("click", function(){
+      document.getElementById("reportModal").style.display = "flex";
+    });
+  </script>
+
+</body>
+</html>
